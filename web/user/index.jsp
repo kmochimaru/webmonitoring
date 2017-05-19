@@ -18,12 +18,13 @@
     </head>
     <body style="background-color: #FFFFFF;">
         <c:if test="${username != null}">
-        <jsp:include page="../static/nav_bar.jsp" />
+            <jsp:include page="../static/nav_bar.jsp" />
         <center> 
-        <div class="container">
-           <h1>จัดการ รายวิชา</h1><br>
-             <table class="table table-bordered" align="center">
-                <tr class="success">
+            <div class="container">
+                <h1>จัดการ รายวิชา</h1><br>
+                <table class="table table-bordered" align="center">
+                    <tr class="success">
+                    <th><center>ลำดับ</center></th>
                     <th><center>รหัสวิชา</center></th>
                     <th width="300"><center>ชื่อรายวิชา</center></th>
                     <th width="130"><center>จำนวนนักเรียน</center></th>
@@ -33,112 +34,124 @@
                     <th ><center>ลบ</center></th>           
                     <th ><center>เช็คชื่อ</center></th>
                     <th ><center>ออกรายงาน</center></th>
-                </tr>
-                <%  
-                    //Get Subject
-                    SubjectDaoImp subjectDao = new SubjectDaoImp();
-                    List<SjoinT> listSubject = new ArrayList();
-                    listSubject = subjectDao.getAllSubjectJoin();
-                    session.setAttribute("listSubject", listSubject);
-                    //Get Student
-                    StudentDaoImp studentDao = new StudentDaoImp();
-                    List<Student> listStudent = new ArrayList();
-                    listStudent = studentDao.getAllStudent();
-                    session.setAttribute("listStudent", listStudent);
-                %>
-                <c:forEach var="sub" items="${listSubject}" >
-                <tr>
-                    <td>
-                      <center>
-                           ${sub.subjectId}
-                      </center>
-                    </td>
-                    <td>
-                       <center>
-                           ${sub.subjectName}
-                       </center>
-                    </td>
-                    <td>
+                    </tr>
+                    <%
+                        //Get Subject
+                        SubjectDaoImp subjectDao = new SubjectDaoImp();
+                        List<SjoinT> listSubject = new ArrayList();
+                        listSubject = subjectDao.getAllSubjectJoin();
+                        session.setAttribute("listSubject", listSubject);
+                        //Get Student
+                        StudentDaoImp studentDao = new StudentDaoImp();
+                        List<Student> listStudent = new ArrayList();
+                        listStudent = studentDao.getAllStudent();
+                        session.setAttribute("listStudent", listStudent);
+                    %>
+                    <c:forEach var="sub" items="${listSubject}" varStatus="index">
+                        <tr>
+                        <td>
                         <center>
-                            
+                            ${index.count}
                         </center>
-                    </td>
-                    <td>
+                        </td>
+                        <td>
                         <center>
-                          ${sub.fullName}
+                            ${sub.subjectId}
                         </center>
-                    </td>
-                    <td>
-                       <center>
-                            <a href="${pageContext.request.contextPath}/user/addStudent.jsp?subjectId=${sub.subjectId}&subjectName=${sub.subjectName}" >
-                                <button  class="btn btn-success"><span class='glyphicon glyphicon-plus'></span></button>
-                            </a>
-                       </center>
-                    </td>
-                    <td>
-                       <center>
-                            <button  data-toggle="modal" data-target="#editModal${sub.subjectId}" class="btn btn-warning"><span class='glyphicon glyphicon-edit'></span></button>
-                            <!-------- popup edit --------->
-                            <div id="editModal${sub.subjectId}" class="modal fade" role="dialog">
-                              <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">แก้ไขรายวิชา</h4>
+                        </td>
+                        <td>
+                        <center>
+                            ${sub.subjectName}
+                        </center>
+                        </td>
+                        <td>
+                        <center>
+
+                        </center>
+                        </td>
+                        <td>
+                        <center>
+                            ${sub.fullName}
+                        </center>
+                        </td>
+                        <c:choose>
+                            <c:when test="${sub.teacherId == valid_id}">
+                                <td> <!-- Add -->
+                                <center>
+                                    <a href="${pageContext.request.contextPath}/user/addStudent.jsp?subjectId=${sub.subjectId}&subjectName=${sub.subjectName}" >
+                                        <button  class="btn btn-success"><span class='glyphicon glyphicon-plus'></span></button>
+                                    </a>
+                                </center>
+                                </td>
+                                <td> <!-- Edit -->
+                                <center>
+                                    <button  data-toggle="modal" data-target="#editModal${sub.subjectId}" class="btn btn-warning"><span class='glyphicon glyphicon-edit'></span></button>
+                                    <!-------- popup edit --------->
+                                    <div id="editModal${sub.subjectId}" class="modal fade" role="dialog">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    <h4 class="modal-title">แก้ไขรายวิชา</h4>
+                                                </div>
+                                                <form action="${pageContext.request.contextPath}/SubjectController?action=update" method="POST">
+                                                    <div class="modal-body">
+                                                        <div class="form-group">
+                                                            <input type="hidden" name="edit_subject_code" value="${sub.subjectId}" />
+                                                            <label style="text-align: left" for="edit_subject_code">รหัสวิชา :</label>
+                                                            <input type="text" id="edit_subject_code" name="edit_subject_code" value="${sub.subjectId}" class="form-control" disabled/>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="edit_subject_name">ชื่อรายวิชา :</label>
+                                                            <input type="text" id="edit_subject_name" name="edit_subject_name" value="${sub.subjectName}" class="form-control" required="required">
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
+                                                        <input id="btnEdit" type="submit" class="btn btn-success" value="แก้ไข">
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <form action="${pageContext.request.contextPath}/SubjectController?action=update" method="POST">
-                                        <div class="modal-body">
-                                            <div class="form-group">
-                                                <input type="hidden" name="edit_subject_code" value="${sub.subjectId}" />
-                                                <label style="text-align: left" for="edit_subject_code">รหัสวิชา :</label>
-                                                <input type="text" id="edit_subject_code" name="edit_subject_code" value="${sub.subjectId}" class="form-control" disabled/>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="edit_subject_name">ชื่อรายวิชา :</label>
-                                                <input type="text" id="edit_subject_name" name="edit_subject_name" value="${sub.subjectName}" class="form-control" required="required">
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
-                                            <input id="btnEdit" type="submit" class="btn btn-success" value="แก้ไข">
-                                        </div>
+                                    <!---------- popup edit -------> 
+                                </center>
+                                </td>
+                                <td> <!-- Remove -->
+                                <center>
+                                    <form action="${pageContext.request.contextPath}/SubjectController?action=delete&subject_code=${sub.subjectId}" method="POST">
+                                        <button type="submit" class="btn btn-danger"><span class='glyphicon glyphicon-remove'></span></button>
                                     </form>
-                                </div>
-                              </div>
-                            </div>
-                            <!---------- popup edit -------> 
-                       </center>
-                    </td>
-                      <td>
-                       <center>
-                           <form action="${pageContext.request.contextPath}/SubjectController?action=delete&subject_code=${sub.subjectId}" method="POST">
-                               <button type="submit" class="btn btn-danger"><span class='glyphicon glyphicon-remove'></span></button>
-                            </form>
-                       </center>
-                    </td>
-                    <td>
-                       <center>
-                            <a href="${pageContext.request.contextPath}/user/checkStudent.jsp?subjectId=${sub.subjectId}&subjectName=${sub.subjectName}" >
-                                <button  class="btn btn-info"><span class='glyphicon glyphicon-check'></span></button>
-                            </a>
-                       </center>
-                    </td>
-                    <td>
-                       <center>
+                                </center>
+                                </td>
+                                <td><!-- Check Student -->
+                                <center>
+                                    <a href="${pageContext.request.contextPath}/user/checkStudent.jsp?subjectId=${sub.subjectId}&subjectName=${sub.subjectName}" >
+                                        <button  class="btn btn-info"><span class='glyphicon glyphicon-check'></span></button>
+                                    </a>
+                                </center>
+                                </td>
+                            </c:when>
+                            <c:otherwise>
+                                <td colspan="4" align="center" style="color: red;">ไม่สามารถเข้าถึงข้อมูลส่วนนี้ได้</td>
+                            </c:otherwise>
+                        </c:choose>
+                        <td>
+                        <center>
                             <a href="test" method="POST">
                                 <button  class="btn btn-default"><span class='glyphicon glyphicon-print'></span></button>
                             </a>
-                       </center>
-                    </td>
-                </tr>
-                </c:forEach>
-            </table>
-            <br><br>
-            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#addModal"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;เพิ่มรายวิชา</button>
-            </center>
-            <!-------- popup add --------->
-            <div id="addModal" class="modal fade" role="dialog">
-              <div class="modal-dialog">
+                        </center>
+                        </td>
+                        </tr>
+                    </c:forEach>
+                </table>
+                <br><br>
+                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#addModal"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;เพิ่มรายวิชา</button>
+        </center>
+        <!-------- popup add --------->
+        <div id="addModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -161,14 +174,14 @@
                         </div>
                     </form>
                 </div>
-              </div>
             </div>
-           <!---------- popup add -------> 
         </div>
-        </div>   
-        </c:if>
-        <c:if test="${username == null}">
-            <jsp:forward page="../login.jsp"></jsp:forward>
-        </c:if>
-    </body>
+        <!---------- popup add -------> 
+    </div>
+</div>   
+</c:if>
+<c:if test="${username == null}">
+    <jsp:forward page="../login.jsp"></jsp:forward>
+</c:if>
+</body>
 </html>

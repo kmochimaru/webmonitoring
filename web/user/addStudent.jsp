@@ -89,7 +89,6 @@
     <script src="${pageContext.request.contextPath}/js/loader.js"></script>
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src='http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.14/angular.min.js'></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-route.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/addStudent.js"></script>
 </body>
 </html>

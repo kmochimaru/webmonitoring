@@ -34,7 +34,6 @@ RequestDispatcher dispatcher;
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("Login POST");
         boolean chk = false;
         HttpSession session = request.getSession();
         request.setCharacterEncoding("UTF-8");
@@ -47,6 +46,7 @@ RequestDispatcher dispatcher;
         chk = dao.isValidLogin(username, password);                             
         if(chk == true){
             list = dao.getTeacherById(Integer.parseInt(username));
+            session.setAttribute("valid_id", list.get(0).getTeacherId());
             session.setAttribute("username_id", username);
             session.setAttribute("username", list.get(0).getNameTitle()+" "+list.get(0).getName()+" "+list.get(0).getSurname());
             response.sendRedirect("user/index.jsp");

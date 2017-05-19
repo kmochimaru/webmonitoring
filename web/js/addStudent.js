@@ -1,8 +1,8 @@
 (function () {
     'use strict';
-    angular.module('sortApp', ['ngRoute'])
+    angular.module('sortApp', [])
 
-            .controller('mainController', function ($scope, $http, $location) {
+            .controller('mainController', function ($scope, $http) {
                 $scope.sortType = 'name'; // set the default sort type
                 $scope.sortReverse = false;  // set the default sort order
                 $scope.searchFish = '';     // set the default search/filter term
@@ -66,4 +66,5 @@
                 });
         return vars;
     }
+    
 })();
