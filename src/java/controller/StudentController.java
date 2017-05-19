@@ -39,10 +39,15 @@ public class StudentController extends HttpServlet {
         list = new ArrayList();
         String json = "";
         Gson gson = new Gson();
-        
         if(action.equals("read")){
             List<Student> listStudent = new ArrayList();
             listStudent = dao.getAllStudent();
+            response.setContentType("application/json");
+            json = gson.toJson(listStudent);
+            response.getWriter().write(json);
+        }else if(action.equals("NotIn")){
+            List<Student> listStudent = new ArrayList();
+            listStudent = dao.getStudentNotIn(request.getParameter("subjectId"));
             response.setContentType("application/json");
             json = gson.toJson(listStudent);
             response.getWriter().write(json);
