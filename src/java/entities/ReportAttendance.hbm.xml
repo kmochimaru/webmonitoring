@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated May 8, 2017 4:30:21 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entities.ReportAttendance" table="report_attendance" catalog="webmonitoring" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="otherSpecify" type="string">
+            <column name="other_specify" length="1" />
+        </property>
+        <property name="studentId" type="string">
+            <column name="student_id" length="20" />
+        </property>
+        <property name="subjectId" type="string">
+            <column name="subject_id" length="20" />
+        </property>
+        <property name="state" type="string">
+            <column name="state" length="45">
+                <comment>pbl(personal business leave) sl(sick leave) late attend absent</comment>
+            </column>
+        </property>
+        <property name="date" type="string">
+            <column name="_date" length="45" />
+        </property>
+        <property name="time" type="string">
+            <column name="_time" length="45" />
+        </property>
+    </class>
+</hibernate-mapping>

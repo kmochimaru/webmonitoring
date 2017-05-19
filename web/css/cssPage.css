@@ -1,0 +1,42 @@
+body{
+     background-color: #cccfff;
+     font-family: 'Prompt', sans-serif;
+ }
+.menu1{
+    width: 230px;
+    height: 230px;
+    background-color: #ff9999;
+    
+}
+
+.item span{
+        font-size: 90px;
+        color: #FFFFFF;
+}
+.menu2{
+     width: 230px;
+    height: 230px;
+    background-color: #5bc0de;
+}
+
+.menu3{
+     width: 230px;
+    height: 230px;
+    background-color: #5cb85c;
+}
+
+.menu4{
+     width: 230px;
+    height: 230px;
+    background-color: #d9534f;
+}
+.Manage_subject{
+   width: 1024px;
+}
+.login1{
+   width: 300px;
+   background-color: #666666;
+ }
+ .login2{
+   width: 250px;
+}
