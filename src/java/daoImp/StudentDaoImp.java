@@ -53,11 +53,11 @@ public class StudentDaoImp implements StudentDao{
     }
 
     @Override
-    public List<Student> getStudentById(int id) {
+    public List<Student> getStudentById(String id) {
         List<Student> list = new ArrayList();
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Query query = session.createQuery("FROM Student WHERE studentId = "+id);
+        Query query = session.createQuery("FROM Student WHERE studentId = '"+id+"'");
         list = query.list();
         transaction.commit();
         session.close();

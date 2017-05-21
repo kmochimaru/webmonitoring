@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated May 20, 2017 8:58:53 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entities.Major" table="major" catalog="webmonitoring" optimistic-lock="version">
+        <id name="majorId" type="java.lang.Integer">
+            <column name="major_id" />
+            <generator class="identity" />
+        </id>
+        <property name="majorName" type="string">
+            <column name="major_name" length="45" />
+        </property>
+        <property name="majorYear" type="string">
+            <column name="major_year" length="45" />
+        </property>
+    </class>
+</hibernate-mapping>

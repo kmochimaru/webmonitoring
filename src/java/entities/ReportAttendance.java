@@ -1,5 +1,5 @@
 package entities;
-// Generated May 8, 2017 4:30:20 PM by Hibernate Tools 4.3.1
+// Generated May 20, 2017 8:58:53 PM by Hibernate Tools 4.3.1
 
 
 
@@ -16,6 +16,12 @@ public class ReportAttendance  implements java.io.Serializable {
      private String state;
      private String date;
      private String time;
+     //new
+     private int attend;
+    private int absent;
+    private int late;
+    private int sl;
+    private int pbl;
 
     public ReportAttendance() {
     }
@@ -80,7 +86,46 @@ public class ReportAttendance  implements java.io.Serializable {
     }
 
 
+    //
+    public int getAttend() {
+        return attend;
+    }
 
+    public void setAttend(int attend) {
+        this.attend = attend;
+    }
+
+    public int getAbsent() {
+        return absent;
+    }
+
+    public void setAbsent(int absent) {
+        this.absent = absent;
+    }
+
+    public int getLate() {
+        return late;
+    }
+
+    public void setLate(int late) {
+        this.late = late;
+    }
+
+    public int getSl() {
+        return sl;
+    }
+
+    public void setSl(int sl) {
+        this.sl = sl;
+    }
+
+    public int getPbl() {
+        return pbl;
+    }
+
+    public void setPbl(int pbl) {
+        this.pbl = pbl;
+    }
 
 }
 

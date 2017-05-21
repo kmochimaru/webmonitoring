@@ -48,4 +48,5 @@ Contributor(s):
   <table-filter match-name="teacher"/>
   <table-filter match-name="report_attendance"/>
   <table-filter match-name="list_in_class"/>
+  <table-filter match-name="major"/>
 </hibernate-reverse-engineering>

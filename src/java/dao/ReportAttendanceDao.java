@@ -6,6 +6,8 @@
 package dao;
 
 import entities.ReportAttendance;
+import entities.ReportAttendanceCount;
+import java.util.List;
 
 /**
  *
@@ -13,4 +15,7 @@ import entities.ReportAttendance;
  */
 public interface ReportAttendanceDao {
     public void addReport(ReportAttendance report);
+    public List<String> getReportBySubject(String subject_id);
+    public List<ReportAttendance> getReportByDate(String date, String subject_id);
+    public List<ReportAttendanceCount> getCount(String subject_id, String student_id);
 }

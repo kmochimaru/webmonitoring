@@ -46,15 +46,16 @@ Contributor(s):
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/webmonitoring?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">1234</property>
-    <property name="hibernate.connection.characterEncoding">utf8</property> 
+    <property name="hibernate.connection.characterEncoding">utf8</property>
     <property name="hibernate.connection.pool_size">200</property>
     <property name="hibernate.c3p0.max_size">50</property>
-    <mapping resource="entities/ReportAttendance.hbm.xml"/>
-    <mapping resource="entities/Activity.hbm.xml"/>
-    <mapping resource="entities/ReportActivity.hbm.xml"/>
-    <mapping resource="entities/Teacher.hbm.xml"/>
-    <mapping resource="entities/Subject.hbm.xml"/>
     <mapping resource="entities/ListInClass.hbm.xml"/>
+    <mapping resource="entities/ReportAttendance.hbm.xml"/>
+    <mapping resource="entities/ReportActivity.hbm.xml"/>
+    <mapping resource="entities/Activity.hbm.xml"/>
+    <mapping resource="entities/Teacher.hbm.xml"/>
     <mapping resource="entities/Student.hbm.xml"/>
+    <mapping resource="entities/Major.hbm.xml"/>
+    <mapping resource="entities/Subject.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

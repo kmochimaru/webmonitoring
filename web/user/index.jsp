@@ -138,7 +138,7 @@
                         </c:choose>
                         <td>
                         <center>
-                            <a href="test" method="POST">
+                            <a href="Report/mainReport.jsp?subjectId=${sub.subjectId}&subjectName=${sub.subjectName}">
                                 <button  class="btn btn-default"><span class='glyphicon glyphicon-print'></span></button>
                             </a>
                         </center>

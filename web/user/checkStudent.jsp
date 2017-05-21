@@ -28,10 +28,10 @@
                             <table class="table" >
                                 <thead>
                                     <tr class="info" >
-                                        <th>ลำดับที่</th>
-                                        <th>ชื่อ - นามสกุล</th>
-                                        <th>รหัสนักศึกษา</th>
-                                        <th>หลักสูตร</th>
+                                        <th><center>ลำดับที่</center></th>
+                                        <th><center>ชื่อ - นามสกุล</center></th>
+                                        <th><center>รหัสนักศึกษา</center></th>
+                                        <th><center>หลักสูตร</center></th>
                                         <th><center>สถานะ</center></th>
                                     </tr>
                                 </thead>
