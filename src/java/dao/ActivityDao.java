@@ -16,6 +16,8 @@ import java.util.List;
 public interface ActivityDao {
     public void addActivity(Activity activity);
     public List<Activity> getAllActivity();
+    public List<Activity> getActivityById(int id);
+    public List<Activity> getActivityBySubjectId(String subject_id);
     public List<AjointS> getAllActivityJoin();
     public void updateActivity(Activity activity);
     public void delActivity(Activity activity);

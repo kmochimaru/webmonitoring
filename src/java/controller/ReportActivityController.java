@@ -53,7 +53,10 @@ public class ReportActivityController extends HttpServlet {
                 bean.setStudentId(obj.get("id").getAsString());
                 bean.setSubjectId(request.getSession().getAttribute("subjectId").toString());
                 bean.setActivityId(Integer.parseInt(request.getSession().getAttribute("activityId").toString()));
-                bean.setPoint(Integer.parseInt(request.getSession().getAttribute("point").toString()));
+                if(obj.get("state").getAsString().equals("attend"))
+                    bean.setPoint(Integer.parseInt(request.getSession().getAttribute("point").toString()));
+                else
+                    bean.setPoint(0);
                 bean.setState(obj.get("state").getAsString());
                 list.add(bean);
                 bean = new ReportActivity();

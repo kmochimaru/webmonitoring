@@ -6,6 +6,8 @@
 package dao;
 
 import entities.ReportActivity;
+import entities.ReportActivitySum;
+import java.util.List;
 
 /**
  *
@@ -13,4 +15,8 @@ import entities.ReportActivity;
  */
 public interface ReportActivityDao {
     public void addReport(ReportActivity report);
+    public List<ReportActivity> getAllReport();
+    public List<ReportActivitySum> getSumPointBySubjectId(String subject_id);
+    public List<ReportActivity> getReportByActivityId(int id);
+    public List<ReportActivity> getReportBySubjectId(String subject_id);
 }

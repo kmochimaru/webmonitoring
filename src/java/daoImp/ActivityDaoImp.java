@@ -98,5 +98,31 @@ public class ActivityDaoImp implements ActivityDao{
         }
         return list;
     }
+
+    @Override
+    public List<Activity> getActivityById(int id) {
+        List<Activity> list = new ArrayList();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        Query query = session.createQuery("FROM Activity WHERE id = :id");
+        query.setParameter("id", id);
+        list = query.list();
+        transaction.commit();
+        session.close();
+        return list;
+    }
+
+    @Override
+    public List<Activity> getActivityBySubjectId(String subject_id) {
+        List<Activity> list = new ArrayList();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        Query query = session.createQuery("FROM Activity WHERE subjectId = :subject_id");
+        query.setParameter("subject_id", subject_id);
+        list = query.list();
+        transaction.commit();
+        session.close();
+        return list;
+    }
     
 }
