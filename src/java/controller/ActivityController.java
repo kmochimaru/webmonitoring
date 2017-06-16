@@ -6,6 +6,7 @@
 package controller;
 
 import daoImp.ActivityDaoImp;
+import daoImp.ReportActivityDaoImp;
 import entities.Activity;
 import entities.AjointS;
 import java.io.IOException;
@@ -64,8 +65,10 @@ public class ActivityController extends HttpServlet {
                 dao.updateActivity(bean);
                 response.sendRedirect("user/activity.jsp");
             }else if(action.equals("delete")){
+                ReportActivityDaoImp reportActDao = new ReportActivityDaoImp();
                 bean.setId(Integer.parseInt(request.getParameter("activity_id")));
                 dao.delActivity(bean);
+                reportActDao.delReportByActivityId(request.getParameter("activity_id"));
                 response.sendRedirect("user/activity.jsp");
             }
             

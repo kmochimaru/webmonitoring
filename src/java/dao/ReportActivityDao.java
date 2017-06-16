@@ -15,8 +15,11 @@ import java.util.List;
  */
 public interface ReportActivityDao {
     public void addReport(ReportActivity report);
+    public void updateReportById(int id, String state, int point);
     public List<ReportActivity> getAllReport();
     public List<ReportActivitySum> getSumPointBySubjectId(String subject_id);
     public List<ReportActivity> getReportByActivityId(int id);
     public List<ReportActivity> getReportBySubjectId(String subject_id);
+    public void delReportByActivityId(String activity_id);
+    public void delReportBySubjectId(String subject_id);
 }

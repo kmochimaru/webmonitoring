@@ -18,4 +18,6 @@ public interface ReportAttendanceDao {
     public List<String> getReportBySubject(String subject_id);
     public List<ReportAttendance> getReportByDate(String date, String subject_id);
     public List<ReportAttendanceCount> getCount(String subject_id, String student_id);
+    public void updateReportById(int id, String state);
+    public void delReportBySubjectId(String subject_id);
 }

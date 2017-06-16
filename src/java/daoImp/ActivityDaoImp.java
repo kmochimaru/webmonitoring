@@ -9,7 +9,6 @@ import connection.ConnectDB;
 import dao.ActivityDao;
 import entities.Activity;
 import entities.AjointS;
-import entities.Student;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -123,6 +122,17 @@ public class ActivityDaoImp implements ActivityDao{
         transaction.commit();
         session.close();
         return list;
+    }
+
+    @Override
+    public void delActivityBySubjectId(String subject_id) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        Query query = session.createQuery("DELETE Activity WHERE subjectId = :subjectId");
+        query.setParameter("subjectId", subject_id);
+        int result = query.executeUpdate();
+        transaction.commit();
+        session.close();
     }
     
 }

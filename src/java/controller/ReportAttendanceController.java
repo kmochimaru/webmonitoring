@@ -5,6 +5,7 @@
  */
 package controller;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -21,6 +22,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.hibernate.engine.spi.Status;
 
 /**
  *
@@ -28,11 +30,50 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "ReportAttendanceController", urlPatterns = {"/ReportAttendanceController"})
 public class ReportAttendanceController extends HttpServlet {
+    
+    String json = "";
+    Gson gson = new Gson();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        ReportAttendaceDaoImp dao = new ReportAttendaceDaoImp();
+        ReportAttendance bean = new ReportAttendance();
+        List<String> list = new ArrayList<String>();
+        List<ReportAttendance> report = new ArrayList();
+        String action = request.getParameter("action")==null?"":request.getParameter("action");
+        String jsonStr = request.getParameter("UPDATE")==null?"":request.getParameter("UPDATE");
         
+        if(action.equals("reportDate")){
+            list = dao.getReportBySubject(request.getParameter("subjectId"));
+            json = gson.toJson(list);
+            response.setContentType("application/json");
+            response.getWriter().write(json);
+        }else if(action.equals("reportByDate")){
+            dao = new ReportAttendaceDaoImp();
+            report = dao.getReportByDate(request.getParameter("date"), request.getParameter("subjectId"));
+            json = gson.toJson(report);
+            response.setContentType("application/json");
+            response.getWriter().write(json);
+        }else if(action.equals("updateReport")){
+            if (jsonStr != "") {
+                JsonArray result = (JsonArray) new JsonParser().parse(jsonStr);
+                for (int i = 0; i < result.size(); i++) {
+                    JsonElement elem = result.get(i);
+                    JsonObject obj = elem.getAsJsonObject();
+                    bean.setId(obj.get("id").getAsInt());
+                    bean.setState(obj.get("state").getAsString());
+                    report.add(bean);
+                    bean = new ReportAttendance();
+                }
+
+                for (ReportAttendance data : report) {
+                    dao.updateReportById(data.getId(), data.getState());
+                }
+            }
+        }
     }
 
     @Override

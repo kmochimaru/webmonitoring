@@ -137,6 +137,38 @@ public class ReportAttendaceDaoImp implements ReportAttendanceDao{
         return list;
     }
 
-    
+    @Override
+    public void delReportBySubjectId(String subject_id) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        Query query = session.createQuery("DELETE ReportAttendance WHERE subjectId = :subjectId");
+        query.setParameter("subjectId", subject_id);
+        int result = query.executeUpdate();
+        transaction.commit();
+        session.close();
+    }
+
+    @Override
+    public void updateReportById(int id, String state) {
+        Transaction transaction = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try{
+            transaction = session.beginTransaction();
+            Query query = session.createQuery("UPDATE ReportAttendance r SET r.state = :state WHERE r.id = :id");
+            query.setParameter("id", id);
+            query.setParameter("state", state);
+            int result = query.executeUpdate();
+            transaction.commit();
+        }catch(RuntimeException e){
+            if(transaction != null){
+                transaction.rollback();
+            }
+            System.out.println("RuntimeException updateReportById ====>  "+e);
+        }finally{
+            session.flush();
+            session.close();
+        }
+    }
+
     
 }

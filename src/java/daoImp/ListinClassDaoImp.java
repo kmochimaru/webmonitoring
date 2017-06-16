@@ -15,6 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -76,6 +77,17 @@ public class ListinClassDaoImp implements ListInClassDao{
             System.out.println("Exception getListInClass    :    "+e);
         }
         return list;
+    }
+
+    @Override
+    public void deleteListInClassBySubjectId(String subject_id) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        Query query = session.createQuery("DELETE ListInClass WHERE subjectId = :subjectId");
+        query.setParameter("subjectId", subject_id);
+        int result = query.executeUpdate();
+        transaction.commit();
+        session.close();
     }
     
 }

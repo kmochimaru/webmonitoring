@@ -7,10 +7,8 @@ package daoImp;
 
 import connection.ConnectDB;
 import dao.ReportActivityDao;
-import static daoImp.StudentDaoImp.dbConnect;
 import entities.ReportActivity;
 import entities.ReportActivitySum;
-import entities.Student;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -76,7 +74,7 @@ public class ReportActivityDaoImp implements ReportActivityDao {
         session.close();
         return list;
     }
-
+    
     @Override
     public List<ReportActivitySum> getSumPointBySubjectId(String subject_id) {
         List<ReportActivitySum> list = new ArrayList();
@@ -101,6 +99,51 @@ public class ReportActivityDaoImp implements ReportActivityDao {
             System.out.println("Exception getSumPointBySubjectId    :    " + e);
         }
         return list;
+    }
+    
+    @Override
+    public void updateReportById(int id, String state, int point) {
+        Transaction transaction = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try{
+            transaction = session.beginTransaction();
+            Query query = session.createQuery("UPDATE ReportActivity r SET r.state = :state, r.point = :point WHERE r.id = :id");
+            query.setParameter("id", id);
+            query.setParameter("state", state);
+            query.setParameter("point", point);
+            int result = query.executeUpdate();
+            transaction.commit();
+        }catch(RuntimeException e){
+            if(transaction != null){
+                transaction.rollback();
+            }
+            System.out.println("RuntimeException updateReportById ====>  "+e);
+        }finally{
+            session.flush();
+            session.close();
+        }
+    }
+
+    @Override
+    public void delReportBySubjectId(String subject_id) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        Query query = session.createQuery("DELETE ReportActivity WHERE subjectId = :subjectId");
+        query.setParameter("subjectId", subject_id);
+        int result = query.executeUpdate();
+        transaction.commit();
+        session.close();
+    }
+
+    @Override
+    public void delReportByActivityId(String activity_id) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        Query query = session.createQuery("DELETE ReportActivity WHERE activityId = :activityId");
+        query.setParameter("activityId", Integer.parseInt(activity_id));
+        int result = query.executeUpdate();
+        transaction.commit();
+        session.close();
     }
 
 }

@@ -1,5 +1,5 @@
 package entities;
-// Generated May 20, 2017 8:58:53 PM by Hibernate Tools 4.3.1
+// Generated Jun 13, 2017 4:53:24 PM by Hibernate Tools 4.3.1
 
 
 
@@ -11,6 +11,8 @@ public class Subject  implements java.io.Serializable {
 
      private String subjectId;
      private String subjectName;
+     private Integer term;
+     private Integer academicYear;
      private String teacherId;
 
     public Subject() {
@@ -20,9 +22,11 @@ public class Subject  implements java.io.Serializable {
     public Subject(String subjectId) {
         this.subjectId = subjectId;
     }
-    public Subject(String subjectId, String subjectName, String teacherId) {
+    public Subject(String subjectId, String subjectName, Integer term, Integer academicYear, String teacherId) {
        this.subjectId = subjectId;
        this.subjectName = subjectName;
+       this.term = term;
+       this.academicYear = academicYear;
        this.teacherId = teacherId;
     }
    
@@ -39,6 +43,20 @@ public class Subject  implements java.io.Serializable {
     
     public void setSubjectName(String subjectName) {
         this.subjectName = subjectName;
+    }
+    public Integer getTerm() {
+        return this.term;
+    }
+    
+    public void setTerm(Integer term) {
+        this.term = term;
+    }
+    public Integer getAcademicYear() {
+        return this.academicYear;
+    }
+    
+    public void setAcademicYear(Integer academicYear) {
+        this.academicYear = academicYear;
     }
     public String getTeacherId() {
         return this.teacherId;

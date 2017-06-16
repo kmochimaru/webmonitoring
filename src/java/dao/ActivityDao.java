@@ -21,4 +21,5 @@ public interface ActivityDao {
     public List<AjointS> getAllActivityJoin();
     public void updateActivity(Activity activity);
     public void delActivity(Activity activity);
+    public void delActivityBySubjectId(String subject_id);
 }

@@ -17,7 +17,7 @@ import java.util.Calendar;
  */
 public class DateTime {
     DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
-    DateFormat date = new SimpleDateFormat("dd/MM/yy");
+    DateFormat date = new SimpleDateFormat("dd/MM/yyyy");
     DateFormat time = new SimpleDateFormat("HH:mm:ss");
     Calendar calobj = Calendar.getInstance();
     

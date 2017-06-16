@@ -6,3 +6,4 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Prompt" rel="stylesheet">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/cssPage.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/toastr.min.css">

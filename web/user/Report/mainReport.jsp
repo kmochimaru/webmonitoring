@@ -1,3 +1,5 @@
+<%@page import="entities.Subject"%>
+<%@page import="daoImp.SubjectDaoImp"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.List"%>
@@ -10,14 +12,21 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Report Index</title>
+        <title>เลือกรายงาน</title>
         <jsp:include page="../../head_tag.jsp" />
     </head>
     <body style="background-color: #FFFFFF;">
         <% 
+            SubjectDaoImp subDao = new SubjectDaoImp();
+            List<Subject> report_subject = new ArrayList();
+            report_subject = subDao.getSubjectById(Integer.parseInt(request.getParameter("subjectId")));
             ListinClassDaoImp dao = new ListinClassDaoImp();
             List<Ljoin2S> list_student = new ArrayList();
             list_student = dao.getListInClass(request.getParameter("subjectId"));
+            
+            
+            request.getSession().setAttribute("term", report_subject.get(0).getTerm());
+            request.getSession().setAttribute("academicYear", report_subject.get(0).getAcademicYear());
             request.getSession().setAttribute("listStudent", list_student);
         %>
         <div class="container">

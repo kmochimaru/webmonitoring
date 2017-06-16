@@ -1,5 +1,6 @@
+<%@page import="daoImp.ReportActivityDaoImp"%>
+<%@page import="entities.ReportActivity"%>
 <%@page import="entities.AjointS"%>
-<%@page import="java.util.List"%>
 <%@page import="java.util.List"%>
 <%@page import="daoImp.ActivityDaoImp"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -9,7 +10,7 @@
 <html leng="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Manage Activity</title>
+        <title>จัดการกิจกรรม</title>
         <jsp:include page="../static/head_tag.jsp" />
     </head>
     <body style="background-color: #ffffff">
@@ -19,7 +20,7 @@
                 ActivityDaoImp dao = new ActivityDaoImp();
                 List<AjointS> listActivity = new ArrayList();
                 listActivity = dao.getAllActivityJoin();
-                request.getSession().setAttribute("listActivity", listActivity);
+                int i = 1;
             %>
            <center> <h1>จัดการ กิจกรรม</h1></center><br>
            <table class="table">
@@ -32,41 +33,60 @@
                     <th><center>แก้ไขกิจกรรม</center></th>
                     <th><center>ลบกิจกรรม</center></th>
                </tr>
-               <c:forEach var="act" items="${listActivity}" varStatus="index">
+               <% 
+               for(AjointS act : listActivity){
+               %>
                 <tr>
                     <td>
                         <center>
-                            ${index.count}
+                            <%= i++ %>
                         </center>
                     </td>
                     <td>
                         <center>
-                            ${act.activityName}
+                            <%= act.getActivityName() %>
                         </center>
                     </td>
                     <td>
                         <center>
-                            ${act.point}
+                            <%= act.getPoint() %>
                         </center>
                     </td>
                     <td>
                         <center>
-                            ${act.subjectName}
+                            <%= act.getSubjectName() %>
                         </center>
                     </td>
                     <td>
+                        <% 
+                            List<ReportActivity> chkReport = new ArrayList();
+                            ReportActivityDaoImp chkReportDao = new ReportActivityDaoImp();
+                            chkReport = chkReportDao.getReportByActivityId(act.getId());
+                            if(chkReport.size() == 0){
+                        %>
                         <center>
-                            <a href="${pageContext.request.contextPath}/user/checkActivity.jsp?activityId=${act.id}&subjectId=${act.subjectId}&subjectName=${act.subjectName}&activityName=${act.activityName}&point=${act.point}">
+                            <a href="${pageContext.request.contextPath}/user/checkActivity.jsp?activityId=<%= act.getId() %>&subjectId=<%= act.getSubjectId() %>&subjectName=<%= act.getSubjectName()%>&activityName=<%= act.getActivityName()%>&point=<%= act.getPoint()%>">
                                <button type="submit" class="btn btn-success"><span class='glyphicon glyphicon-plus'></span></button>
                             </a>
                         </center>
+                        <%
+                            }else{
+                        %>
+                        <center>
+                            <a href="${pageContext.request.contextPath}/user/editCheckActivity.jsp?activityId=<%= act.getId()%>&subjectId=<%= act.getSubjectId()%>&subjectName=<%= act.getSubjectName()%>&activityName=<%= act.getActivityName()%>&point=<%= act.getPoint()%>">
+                               <button type="submit" class="btn btn-success"><span class='glyphicon glyphicon-book'></span></button>
+                            </a> 
+                        </center>
+                        <%
+                            }
+                        %>
                     </td>
                     <td>
                         <center>
-                            <button  data-toggle="modal" data-target="#editModal${act.id}" class="btn btn-info"><span class='glyphicon glyphicon-edit'></span></button>
+                            <button  data-toggle="modal" data-target="#editModal<%= act.getId()%>" class="btn btn-info"><span class='glyphicon glyphicon-edit'></span></button>
                         </center>    
                             <!-------- popup edit --------->
-                            <div id="editModal${act.id}" class="modal fade" role="dialog">
+                            <div id="editModal<%= act.getId()%>" class="modal fade" role="dialog">
                               <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -76,24 +96,24 @@
                                     <form action="${pageContext.request.contextPath}/ActivityController?action=update" method="POST">
                                         <div class="modal-body">
                                             <div class="form-group">
-                                                <input type="hidden" name="edit_activity_id" value="${act.id}" />
+                                                <input type="hidden" name="edit_activity_id" value="<%= act.getId()%>" />
                                                 <label for="sel1">ชื่อกิจกรรม:</label>
-                                                <input type="text" name="edit_activity_name" class="form-control" value="${act.activityName}" required="required"/>
+                                                <input type="text" name="edit_activity_name" class="form-control" value="<%= act.getActivityName()%>" required="required"/>
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="sel1">คำอธิบาย:</label>
-                                                <input type="text" name="edit_activity_description" class="form-control" value="${act.description}" required="required"/>
+                                                <input type="text" name="edit_activity_description" class="form-control" value="<%= act.getDescription()%>" required="required"/>
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="sel1">คำแนน:</label>
-                                                <input type="number" name="edit_activity_point" class="form-control" value="${act.point}" required="required"/>
+                                                <input type="number" name="edit_activity_point" class="form-control" value="<%= act.getPoint()%>" required="required"/>
                                             </div>
                                             <div class="form-group">
                                                 <label for="sel1">รายวิชา : </label>
-                                                <input type="hidden" name="edit_activity_subject" value="${act.subjectId}" />
-                                                <input type="text" name="" class="form-control" value="${act.subjectName}" disabled/>
+                                                <input type="hidden" name="edit_activity_subject" value="<%= act.getSubjectId()%>" />
+                                                <input type="text" name="" class="form-control" value="<%= act.getSubjectName()%>" disabled/>
                                             </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
@@ -108,13 +128,15 @@
                     </td>
                     <td>
                         <center>
-                            <form action="${pageContext.request.contextPath}/ActivityController?action=delete&activity_id=${act.id}" method="POST">
+                            <form action="${pageContext.request.contextPath}/ActivityController?action=delete&activity_id=<%= act.getId()%>" method="POST">
                                <button type="submit" class="btn btn-danger"><span class='glyphicon glyphicon-remove'></span></button>
                             </form>
                         </center>
                     </td>
                 </tr>
-                </c:forEach>
+                <% 
+                }
+                %>
            </table>
            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal1">
                    <span class="glyphicon glyphicon-plus-sign"></span></button>

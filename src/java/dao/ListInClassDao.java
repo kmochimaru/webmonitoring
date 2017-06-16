@@ -15,6 +15,7 @@ import java.util.List;
  */
 public interface ListInClassDao {
     public void addListInClass(ListInClass list);
+    public void deleteListInClassBySubjectId(String subject_id);
     public void deleteListInClass(ListInClass list);
     public List<Ljoin2S> getListInClass(String subject_id);
 }

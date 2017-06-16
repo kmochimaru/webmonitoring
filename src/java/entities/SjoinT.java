@@ -12,6 +12,24 @@ package entities;
 public class SjoinT implements java.io.Serializable {
      private String subjectId;
      private String subjectName;
+     private Integer term;
+     private Integer academicYear;
+
+    public Integer getTerm() {
+        return term;
+    }
+
+    public void setTerm(Integer term) {
+        this.term = term;
+    }
+
+    public Integer getAcademicYear() {
+        return academicYear;
+    }
+
+    public void setAcademicYear(Integer academicYear) {
+        this.academicYear = academicYear;
+    }
      private String teacherId;
      
      private String nameTitle;

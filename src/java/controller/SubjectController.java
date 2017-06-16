@@ -6,7 +6,12 @@
 package controller;
 
 import com.google.gson.Gson;
+import daoImp.ActivityDaoImp;
+import daoImp.ListinClassDaoImp;
+import daoImp.ReportActivityDaoImp;
+import daoImp.ReportAttendaceDaoImp;
 import daoImp.SubjectDaoImp;
+import entities.ReportActivity;
 import entities.Subject;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -55,18 +60,34 @@ public class SubjectController extends HttpServlet {
             if(action.equals("add")){
                 bean.setSubjectId(request.getParameter("subject_code"));
                 bean.setSubjectName(request.getParameter("subject_name"));
+                bean.setTerm(Integer.parseInt(request.getParameter("term")));
+                bean.setAcademicYear(Integer.parseInt(request.getParameter("academic_year")));
                 bean.setTeacherId(session.getAttribute("username_id").toString());
                 dao.addSubject(bean);
                 response.sendRedirect("user/index.jsp");
             }else if(action.equals("update")){
                 bean.setSubjectId(request.getParameter("edit_subject_code"));
                 bean.setSubjectName(request.getParameter("edit_subject_name"));
+                bean.setTerm(Integer.parseInt(request.getParameter("term")));
+                bean.setAcademicYear(Integer.parseInt(request.getParameter("academic_year")));
                 bean.setTeacherId(session.getAttribute("username_id").toString());
                 dao.updateSubject(bean);
                 response.sendRedirect("user/index.jsp");
             }if(action.equals("delete")){
-                bean.setSubjectId(request.getParameter("subject_code"));
+                //init dao 
+                ListinClassDaoImp listDao = new ListinClassDaoImp();
+                ActivityDaoImp actDao = new ActivityDaoImp();
+                ReportActivityDaoImp reportActDao = new ReportActivityDaoImp();
+                ReportAttendaceDaoImp reportAttDao = new ReportAttendaceDaoImp();
+                
+                String subjectId = request.getParameter("subject_code");
+                bean.setSubjectId(subjectId);       //Delete subject
                 dao.deleteSubject(bean);
+                listDao.deleteListInClassBySubjectId(subjectId);
+                actDao.delActivityBySubjectId(subjectId);
+                reportActDao.delReportBySubjectId(subjectId);
+                reportAttDao.delReportBySubjectId(subjectId);
+                
                 response.sendRedirect("user/index.jsp");
             }
     }

@@ -65,6 +65,8 @@ public class SubjectDaoImp implements SubjectDao{
                 do{
                     bean.setSubjectId(rec.getString("subject_id"));
                     bean.setSubjectName(rec.getString("subject_name"));
+                    bean.setTerm(rec.getInt("term"));
+                    bean.setAcademicYear(rec.getInt("academic_year"));
                     bean.setTeacherId(rec.getString("teacher_id"));
                     bean.setNameTitle(rec.getString("name_title"));
                     bean.setName(rec.getString("name"));

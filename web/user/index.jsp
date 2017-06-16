@@ -13,7 +13,7 @@
 <html lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Manage Subject</title>
+        <title>จัดการรายวิชา</title>
         <jsp:include page="../static/head_tag.jsp" />
     </head>
     <body style="background-color: #FFFFFF;">
@@ -24,15 +24,14 @@
                 <h1>จัดการ รายวิชา</h1><br>
                 <table class="table table-bordered" align="center">
                     <tr class="success">
-                    <th><center>ลำดับ</center></th>
+                        <th><center>ลำดับ</center></th>
                     <th><center>รหัสวิชา</center></th>
-                    <th width="300"><center>ชื่อรายวิชา</center></th>
-                    <th width="130"><center>จำนวนนักเรียน</center></th>
-                    <th width="147"><center>ชื่ออาจารย์ผู้สอน</center></th>
-                    <th ><center>เพิ่ม</center></th>       
-                    <th ><center>แก้ไข</center></th>   
-                    <th ><center>ลบ</center></th>           
-                    <th ><center>เช็คชื่อ</center></th>
+                    <th width="200"><center>ชื่อรายวิชา</center></th>
+                    <th width="250"><center>ชื่ออาจารย์ผู้สอน</center></th>
+                    <th ><center>เพิ่มนักศึกษา</center></th>       
+                    <th ><center>แก้ไขรายวิชา</center></th>   
+                    <th ><center>ลบรายวิชา</center></th>           
+                    <th ><center>เช็คชื่อนักศึกษา</center></th>
                     <th ><center>ออกรายงาน</center></th>
                     </tr>
                     <%
@@ -49,7 +48,7 @@
                     %>
                     <c:forEach var="sub" items="${listSubject}" varStatus="index">
                         <tr>
-                        <td>
+                            <td>
                         <center>
                             ${index.count}
                         </center>
@@ -62,11 +61,6 @@
                         <td>
                         <center>
                             ${sub.subjectName}
-                        </center>
-                        </td>
-                        <td>
-                        <center>
-
                         </center>
                         </td>
                         <td>
@@ -105,6 +99,14 @@
                                                             <label for="edit_subject_name">ชื่อรายวิชา :</label>
                                                             <input type="text" id="edit_subject_name" name="edit_subject_name" value="${sub.subjectName}" class="form-control" required="required">
                                                         </div>
+                                                        <div class="form-group">
+                                                            <label for="term">ภาคเรียน :</label>
+                                                            <input type="text" id="term" name="term" value="${sub.term}" class="form-control" required="required">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="academic_year">ปีการศึกษา :</label>
+                                                            <input type="text" id="academic_year" name="academic_year" value="${sub.academicYear}" class="form-control" required="required">
+                                                        </div>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
@@ -128,6 +130,9 @@
                                 <center>
                                     <a href="${pageContext.request.contextPath}/user/checkStudent.jsp?subjectId=${sub.subjectId}&subjectName=${sub.subjectName}" >
                                         <button  class="btn btn-info"><span class='glyphicon glyphicon-check'></span></button>
+                                    </a>
+                                    <a href="${pageContext.request.contextPath}/user/editCheckAttendance.jsp?subjectId=${sub.subjectId}&subjectName=${sub.subjectName}" >
+                                        <button  class="btn btn-warning"><span class='glyphicon glyphicon-book'></span></button>
                                     </a>
                                 </center>
                                 </td>
@@ -166,6 +171,14 @@
                             <div class="form-group">
                                 <label for="subject_name">ชื่อรายวิชา :</label>
                                 <input type="text" id="subject_name" name="subject_name" class="form-control" required="required">
+                            </div>
+                            <div class="form-group">
+                                <label for="term">ภาคเรียน :</label>
+                                <input type="number" id="term" name="term" max="3" min="1" class="form-control" required="required">
+                            </div>
+                            <div class="form-group">
+                                <label for="academic_year">ปีการศึกษา :</label>
+                                <input type="text" id="academic_year" name="academic_year" class="form-control" required="required">
                             </div>
                         </div>
                         <div class="modal-footer">

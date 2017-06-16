@@ -8,22 +8,29 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>เช็คชื่อการเข้าเรียน</title>
+        <title>แก้ไขรายงานเข้าชั้นเรียน</title>
         <jsp:include page="../static/head_tag.jsp" />
         <link rel="stylesheet" type="text/css"  href="../css/style.css" >
         <link rel="stylesheet" type="text/css"  href="../css/loader.css" >
     </head>
     <body style="background-color: #FFFFFF;" onload="myLoading()">
-        <div class="container" ng-app="stateApp" ng-controller="mainController">
+        <div class="container" ng-app="stateApp" ng-controller="updateController">
             <jsp:include page="../static/nav_bar.jsp" />
-                <center><h1>เช็คชื่อการเข้าเรียน</h1></center>
+                <center><h1>แก้ไขใบรายชื่อ</h1></center>
                 <center><h2>วิชา <%= new String(request.getParameter("subjectName").getBytes("iso-8859-1"), "UTF-8") %></h2></center>
-                <% 
-                    HttpSession sesstion = request.getSession();
-                    sesstion.setAttribute("subjectId", new String(request.getParameter("subjectId").getBytes("iso-8859-1"), "UTF-8"));
-                %>
+                <div class="form-group row" align="center">
+                    <label class="col-sm-2" for="selectDate"><h4>กรุณาเลือกวันที่ :</h4></label>
+                    <div class="col-sm-3">
+                        <select id="selectDate" name="selectDate" class="form-control" 
+                                ng-change="loadReport(selected)" 
+                                ng-model="selected" 
+                                ng-options="item for item in date">
+                        </select>
+                    </div>
+                </div>
+                <br>
                     <div id="loader"></div>
-                    <div style="display:none;" id="myDiv" class="animate-bottom">
+                    <div ng-show="sizeStudent > 0" style="display:none;" id="myDiv" class="animate-bottom">
                         <form>
                             <table class="table" >
                                 <thead>
@@ -43,40 +50,40 @@
                                         <td>{{std.major}}</td>
                                         <td><center>
                                                 <input type="radio" id="radio1{{std.studentId}}" name="group{{key+1}}" value="attend"
-                                                        ng-model="state"
-                                                        ng-click="toggleSelection(std.studentId, state)" 
+                                                        ng-model="std.state"
+                                                        ng-click="toggleSelection(std.id, std.state)" 
                                                         ng-true-value="'attend'" 
                                                         ng-false-value="'-'"
                                                 >
                                                 <label for="radio1{{std.studentId}}">มาเรียน</label>
                                                 
                                                 <input type="radio" id="radio2{{std.studentId}}" name="group{{key+1}}" value="late"
-                                                        ng-model="state"
-                                                        ng-click="toggleSelection(std.studentId, state)" 
+                                                        ng-model="std.state"
+                                                        ng-click="toggleSelection(std.id, std.state)" 
                                                         ng-true-value="'late'" 
                                                         ng-false-value="'-'"
                                                 >
                                                 <label for="radio2{{std.studentId}}">สาย</label>
                                                 
                                                 <input type="radio" id="radio3{{std.studentId}}" name="group{{key+1}}" value="absent"
-                                                        ng-model="state"
-                                                        ng-click="toggleSelection(std.studentId, state)" 
+                                                        ng-model="std.state"
+                                                        ng-click="toggleSelection(std.id, std.state)" 
                                                         ng-true-value="'absent'" 
                                                         ng-false-value="'-'"
                                                 >
                                                 <label for="radio3{{std.studentId}}">ขาด</label>
                                                 
                                                 <input type="radio" id="radio4{{std.studentId}}" name="group{{key+1}}" value="pbl"
-                                                        ng-model="state"
-                                                        ng-click="toggleSelection(std.studentId, state)" 
+                                                        ng-model="std.state"
+                                                        ng-click="toggleSelection(std.id, std.state)" 
                                                         ng-true-value="'pbl'" 
                                                         ng-false-value="'-'"
                                                 >
                                                 <label for="radio4{{std.studentId}}">ลากิจ</label>
                                                 
                                                 <input type="radio" id="radio5{{std.studentId}}" name="group{{key+1}}" value="sl"
-                                                       ng-model="state"
-                                                        ng-click="toggleSelection(std.studentId, state)" 
+                                                       ng-model="std.state"
+                                                        ng-click="toggleSelection(std.id, std.state)" 
                                                         ng-true-value="'sl'" 
                                                         ng-false-value="'-'" 
                                                 >
@@ -88,13 +95,14 @@
                                 </tbody>
                             </table>
                         <center>
-                            <input type="submit" class="btn btn-success" name="submit" value="ส่งข้อมูล" ng-click="addList()" ng-disabled="sizeStudent <= 0" >
+                            <input type="submit" class="btn btn-success" name="submit" value="ส่งข้อมูล" ng-click="editList()" ng-disabled="sizeStudent <= 0" >
                         &nbsp;&nbsp;&nbsp;&nbsp;
                         </center>
                         </form>
                     </div>
            
     </div><!------container------>
+    <script src="${pageContext.request.contextPath}/js/toastr.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/loader.js"></script>
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src='http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.14/angular.min.js'></script>
