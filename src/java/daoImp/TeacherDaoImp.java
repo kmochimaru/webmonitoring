@@ -33,9 +33,9 @@ public class TeacherDaoImp implements TeacherDao{
     public boolean isValidLogin(String username, String password) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        String sql = "FROM Teacher t WHERE t.teacherId= :username AND t.password = :password";
+        String sql = "FROM Teacher t WHERE t.username= :username AND t.password = :password";
         Query query = session.createQuery(sql);
-        query.setParameter("username", Integer.parseInt(username));
+        query.setParameter("username", username);
         query.setParameter("password", password);
         List<Teacher> list = query.list();
         if(list.size() > 0){
@@ -72,6 +72,28 @@ public class TeacherDaoImp implements TeacherDao{
         transaction.commit();
         session.close();
         return list;
+    }
+    
+    @Override
+    public List<Teacher> getTeacherByUsername(String username) {
+        List<Teacher> list = new ArrayList();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        Query query = session.createQuery("FROM Teacher t WHERE t.username = :username");
+        query.setParameter("username", username);
+        list = query.list();
+        transaction.commit();
+        session.close();
+        return list;
+    }
+
+    @Override
+    public void updateTeacher(Teacher teacher) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        session.update(teacher);
+        transaction.commit();
+        session.close();
     }
     
     

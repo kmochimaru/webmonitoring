@@ -11,13 +11,10 @@ import daoImp.ListinClassDaoImp;
 import daoImp.ReportActivityDaoImp;
 import daoImp.ReportAttendaceDaoImp;
 import daoImp.SubjectDaoImp;
-import entities.ReportActivity;
 import entities.Subject;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -54,8 +51,6 @@ public class SubjectController extends HttpServlet {
             bean = new Subject();
             dao  = new SubjectDaoImp();
             list = new ArrayList();
-            
-            //System.out.println("POST");
             
             if(action.equals("add")){
                 bean.setSubjectId(request.getParameter("subject_code"));

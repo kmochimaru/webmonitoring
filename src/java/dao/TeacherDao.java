@@ -15,7 +15,9 @@ import java.util.List;
 public interface TeacherDao {
     public void addTeacher(Teacher teacher);
     public List<Teacher> getAllTeacher();
+    public void updateTeacher(Teacher teacher);
     public void deleteTeacher(Teacher teacher);
     public boolean isValidLogin(String username, String password);
     public List<Teacher> getTeacherById(int id);
+    public List<Teacher> getTeacherByUsername(String username);
 }

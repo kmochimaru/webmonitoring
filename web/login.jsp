@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Login Page</title>
+        <title>เข้าสู่ระบบ</title>
         <jsp:include page="static/head_tag.jsp" />
         <style>
             body{
@@ -29,7 +29,7 @@
                         <form action="${pageContext.request.contextPath}/CommonServlet" method="POST">
                           <div class="form-group">
                              <div class="input-group">
-                                 <input value="6001" type="text" class="form-control" name="username" placeholder="บัญชีผู้ใช้" autofocus="autofocus" required="required"/>
+                                 <input type="text" class="form-control" name="username" placeholder="บัญชีผู้ใช้" autofocus="autofocus" required="required"/>
                                     <span class="input-group-addon">
                                         <i class="glyphicon glyphicon-user"></i>
                                     </span>
@@ -37,7 +37,7 @@
                                </div>
                                <div class="form-group">
                                    <div class="input-group">
-                                       <input value="1234" type="password" class="form-control" name="password" placeholder="รหัสผ่าน" required="required"/>
+                                       <input type="password" class="form-control" name="password" placeholder="รหัสผ่าน" required="required"/>
                                         <span class="input-group-addon">
                                             <i class="glyphicon glyphicon glyphicon-lock"></i>
                                         </span>

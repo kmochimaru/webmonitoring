@@ -17,18 +17,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
+import static security.MD5Hashing.encodeMD5;
 
 @WebServlet(name = "CommonServlet", urlPatterns = {"/CommonServlet"})
 public class CommonServlet extends HttpServlet {
 
-RequestDispatcher dispatcher;
-
+    RequestDispatcher dispatcher;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-   
+
     }
 
     @Override
@@ -38,21 +37,27 @@ RequestDispatcher dispatcher;
         HttpSession session = request.getSession();
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-        
+
         TeacherDaoImp dao = new TeacherDaoImp();
         List<Teacher> list = new ArrayList();
-        String username = request.getParameter("username");                     
-        String password = request.getParameter("password");                    
-        chk = dao.isValidLogin(username, password);                             
-        if(chk == true){
-            list = dao.getTeacherById(Integer.parseInt(username));
-            session.setAttribute("valid_id", list.get(0).getTeacherId());
-            session.setAttribute("username_id", username);
-            session.setAttribute("username", list.get(0).getNameTitle()+" "+list.get(0).getName()+" "+list.get(0).getSurname());
-            response.sendRedirect("user/index.jsp");
-        }else{
-            session.setAttribute("username", null);
-            response.sendRedirect("user/index.jsp");
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        if (username.equals("admin")==true && password.equals("adminabc")==true) {
+            session.setAttribute("username", "ผู้ดูแลระบบ");
+            response.sendRedirect("admin/index.jsp");
+        } else {
+            chk = dao.isValidLogin(username, encodeMD5(password));
+            if (chk == true) {
+                list = dao.getTeacherByUsername(username);
+                session.setAttribute("valid_id", list.get(0).getTeacherId());
+                session.setAttribute("username_id", username);
+                session.setAttribute("username", list.get(0).getNameTitle() + " " + list.get(0).getName() + " " + list.get(0).getSurname());
+                response.sendRedirect("user/index.jsp");
+            } else {
+                session.setAttribute("username", null);
+                response.sendRedirect("user/index.jsp");
+            }
         }
     }
 
